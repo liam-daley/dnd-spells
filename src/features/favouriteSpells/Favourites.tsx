@@ -1,5 +1,4 @@
-import { useAppDispatch } from "../../app/hooks";
-import { updateSpellAsync } from "../spell/spellSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   APIReference as Spell,
   useFetchSpellsQuery,
@@ -14,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import React from "react";
+import { favouriteSpells } from "./favouriteSpellsSlice";
 
 interface ColumnData {
   dataKey: keyof Spell;
@@ -56,8 +56,8 @@ function fixedHeaderContent() {
   return (
     <TableRow
       hover
-      onClick={(event) => {
-        console.log(event);
+      onClick={() => {
+        //update spell
       }}
     >
       {columns.map((column) => (
@@ -93,11 +93,8 @@ function rowContent(_index: number, row: Spell) {
 }
 
 export default function ReactVirtualizedTable() {
-  const { data = { count: 0, results: [] }, isFetching } =
-    useFetchSpellsQuery();
-  const dispatch = useAppDispatch();
-  if (data?.results?.length) dispatch(updateSpellAsync(data.results[0]));
-  const rows: Spell[] = data.results;
+  const spells = useAppSelector(favouriteSpells);
+  const rows: Spell[] = spells;
   return (
     <Paper style={{ height: 400, width: "100%" }}>
       <TableVirtuoso

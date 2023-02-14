@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import spellsReducer from "../features/spells/spellsSlice";
-import { apiSlice } from "../features/spells/spells-api-slice";
+import spellReducer from "../features/spell/spellSlice";
+import favouriteSpellReducer from "../features/favouriteSpells/favouriteSpellsSlice";
+import { apiSlice } from "../api/dnd-api-slice";
 
 export const store = configureStore({
   reducer: {
-    spells: spellsReducer,
+    spell: spellReducer,
+    favouriteSpells: favouriteSpellReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => {
